@@ -2,16 +2,16 @@ import { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 
 function SignIn() {
-    const [email, setEmail] = useState('');
-    const [password, setPassword] = useState('');
-    const navigate = useNavigate();
+  const [email, setEmail] = useState('');
+  const [password, setPassword] = useState('');
+  const navigate = useNavigate();
   
-    useEffect(() => {
-      const token = localStorage.getItem('jwt');
-      if (token) {
-        navigate('/todo');
-      }
-    }, [navigate]);
+  useEffect(() => {
+    const token = localStorage.getItem('jwt');
+    if (token) {
+      navigate('/todo');
+    }
+  }, [navigate]);
 
   const isEmailValid = email.includes('@');
   const isPasswordValid = password.length >= 8;
@@ -36,8 +36,8 @@ function SignIn() {
         throw new Error(`Signin failed: ${response.status}`);
       }
 
-      const { jwt } = await response.json();
-      localStorage.setItem('jwt', jwt);
+      const { access_token } = await response.json();
+      localStorage.setItem('jwt', access_token);
       navigate('/todo');
     } catch (error) {
       console.error('Error during signin:', error);
@@ -60,5 +60,6 @@ function SignIn() {
 }
 
 export default SignIn;
+
 
 
